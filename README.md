@@ -48,7 +48,7 @@ This creates:
 - `src/icons/icon-48.png`
 - `src/icons/icon-128.png`
 
-## Build Zip Packages
+## Build Packages
 
 Run:
 
@@ -59,6 +59,15 @@ Run:
 This creates:
 
 - `dist/link-snippet-copier-chrome.zip`
-- `dist/link-snippet-copier-firefox.zip`
+- `dist/link-snippet-copier-firefox.xpi`
 
 The Firefox package is built with a compatibility manifest that uses `background.scripts` for environments where `background.service_worker` is disabled.
+
+## GitHub Actions Build
+
+Workflow file: `.github/workflows/build-packages.yml`
+
+It runs only on manual trigger (`workflow_dispatch`) and asks for a required `version` input (for example `0.2.0`). The workflow sets this value in `src/manifest.json`, builds, and uploads:
+
+- `dist/link-snippet-copier-chrome.zip`
+- `dist/link-snippet-copier-firefox.xpi`
