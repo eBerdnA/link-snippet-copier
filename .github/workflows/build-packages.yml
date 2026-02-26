@@ -1,0 +1,45 @@
+name: Build Extension Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g. 0.2.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Set extension version
+        run: node scripts/set-version.js "${{ inputs.version }}"
+
+      - name: Build extension packages
+        run: ./scripts/package.sh
+
+      - name: Upload Chrome package
+        uses: actions/upload-artifact@v4
+        with:
+          name: chrome-extension-package-v${{ inputs.version }}
+          path: dist/link-snippet-copier-chrome.zip
+          if-no-files-found: error
+
+      - name: Upload Firefox package
+        uses: actions/upload-artifact@v4
+        with:
+          name: firefox-extension-package-v${{ inputs.version }}
+          path: dist/link-snippet-copier-firefox.xpi
+          if-no-files-found: error

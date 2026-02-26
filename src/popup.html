@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Link Snippet Copier</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f8fb;
+        --panel: #ffffff;
+        --text: #102038;
+        --muted: #4f607d;
+        --primary: #1b63d9;
+        --primary-hover: #154eb0;
+        --border: #d8e1f0;
+      }
+
+      body {
+        margin: 0;
+        padding: 12px;
+        width: 280px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 12px;
+      }
+
+      h1 {
+        margin: 0 0 4px;
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      p {
+        margin: 0 0 12px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .actions {
+        display: grid;
+        gap: 8px;
+      }
+
+      button {
+        border: 0;
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-size: 13px;
+        text-align: left;
+        color: #fff;
+        background: var(--primary);
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: var(--primary-hover);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <h1>Copy Page Snippet</h1>
+      <p>Choose an output format.</p>
+      <div class="actions">
+        <button data-action="popup-copy-markdown">Markdown Link</button>
+        <button data-action="popup-copy-org">Org-mode Link</button>
+        <button data-action="popup-copy-frontmatter">Frontmatter Block</button>
+      </div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
