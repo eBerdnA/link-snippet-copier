@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Link Snippet Copier",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Copy page info in Markdown, Org link, or frontmatter formats.",
   "permissions": [
     "activeTab",
