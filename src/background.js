@@ -96,7 +96,19 @@ async function runOnTab(tabId, actionType) {
     const result = await sendTabMessage(tabId, actionType);
     return result || { ok: true };
   } catch (error) {
-    return { ok: false, error: error?.message || "Failed to execute action" };
+    const rawMessage = error?.message || "";
+    const couldNotReachContentScript =
+      rawMessage.includes("Receiving end does not exist") ||
+      rawMessage.includes("message port closed before a response was received");
+
+    if (couldNotReachContentScript) {
+      return {
+        ok: false,
+        error: "This tab is not ready yet. Reload the page and try again."
+      };
+    }
+
+    return { ok: false, error: rawMessage || "Failed to execute action" };
   }
 }
 
@@ -167,9 +179,9 @@ if (isFirefoxStyleApi) {
     }
 
     const map = {
-      "popup-copy-markdown": "copy-markdown",
-      "popup-copy-org": "copy-org",
-      "popup-copy-frontmatter": "copy-frontmatter"
+      "popup-copy-markdown": "build-markdown",
+      "popup-copy-org": "build-org",
+      "popup-copy-frontmatter": "build-frontmatter"
     };
 
     const action = map[message.type];
@@ -192,9 +204,9 @@ if (isFirefoxStyleApi) {
     }
 
     const map = {
-      "popup-copy-markdown": "copy-markdown",
-      "popup-copy-org": "copy-org",
-      "popup-copy-frontmatter": "copy-frontmatter"
+      "popup-copy-markdown": "build-markdown",
+      "popup-copy-org": "build-org",
+      "popup-copy-frontmatter": "build-frontmatter"
     };
 
     const action = map[message.type];
